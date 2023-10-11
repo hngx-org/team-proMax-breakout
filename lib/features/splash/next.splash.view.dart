@@ -15,6 +15,7 @@ class _NextSplashState extends State<NextSplash> {
     final height = MediaQuery.of(context).size.height;
     return Scaffold(
       body: Stack(
+        clipBehavior: Clip.none,
         children: [
           Image.asset(
             splashBckgrnd,
@@ -22,7 +23,9 @@ class _NextSplashState extends State<NextSplash> {
             height: height,
           ),
           Center(
-            child: Image.asset(splashSecond),
+            child: Image.asset(
+              splashSecond,
+            ),
           ),
         ],
       ),

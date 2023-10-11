@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
       ),
       home: const SplashView(),
       routes: {
-        'nextSplash': (context) => const NextSplash(),
+        '/nextSplash': (context) => const NextSplash(),
       },
     );
   }
