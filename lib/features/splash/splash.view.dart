@@ -1,3 +1,4 @@
+import 'package:bluck_buster/features/game/game_page.dart';
 import 'package:bluck_buster/components/shared/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:rive/rive.dart';
@@ -21,6 +22,15 @@ class _SplashViewState extends State<SplashView> {
         '/nextSplash',
       ),
     );
+  }
+
+  @override
+  void initState() {
+    Future.delayed(const Duration(seconds: 3)).then(
+        (value) => Navigator.of(context).pushReplacement(MaterialPageRoute(
+              builder: (context) => const GamePage(title: "bj"),
+            )));
+    super.initState();
   }
 
   @override
