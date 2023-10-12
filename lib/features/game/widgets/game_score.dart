@@ -1,4 +1,3 @@
-
 import 'package:bluck_buster/features/game/bricks_breaker.dart';
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
@@ -17,11 +16,12 @@ class GameScore extends StatelessWidget {
       valueListenable: (game as BricksBreaker).gameManager.score,
       builder: (context, value, child) {
         return Text(
-          "Score : ${value.toString()}",
+          "Score: ${value.toString()}",
           style: const TextStyle(
+            fontFamily: 'Knewave',
             fontSize: 20,
             color: Colors.white,
-            fontWeight: FontWeight.w600
+            fontWeight: FontWeight.w600,
           ),
         );
       },
