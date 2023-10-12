@@ -1,3 +1,4 @@
+import 'package:bluck_buster/core/utils/constants.dart';
 import 'package:bluck_buster/features/game/bricks_breaker.dart';
 import 'package:bluck_buster/features/game/widgets/game_over.dart';
 import 'package:bluck_buster/features/game/widgets/game_pause.dart';
@@ -6,9 +7,9 @@ import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 
 class GamePage extends StatefulWidget {
-  const GamePage({super.key, required this.title});
-
-  final String title;
+  const GamePage({
+    super.key,
+  });
 
   @override
   State<GamePage> createState() => _GamePageState();

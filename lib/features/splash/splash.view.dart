@@ -31,7 +31,7 @@ class _SplashViewState extends State<SplashView> {
       body: Center(
         child: Lottie.asset(
           teamProMax,
-          height: MediaQuery.of(context).size.height * 0.7,
+          height: MediaQuery.of(context).size.height * 0.2,
         ),
       ),
     );

@@ -1,17 +1,17 @@
-
+import 'package:bluck_buster/features/game/game_page.dart';
+import 'package:bluck_buster/features/menu/menu.view.dart';
 import 'package:flutter/material.dart';
 
 import 'features/splash/next.splash.view.dart';
 import 'features/splash/splash.view.dart';
 
-void main() async{
-WidgetsFlutterBinding.ensureInitialized();
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
 
   runApp(
     const MyApp(),
   );
 }
-
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -30,6 +30,8 @@ class MyApp extends StatelessWidget {
       home: const SplashView(),
       routes: {
         '/nextSplash': (context) => const NextSplash(),
+        // '/menuScreen': (context) => const GameMenu(),
+        '/gameScreen': (context) => const GamePage(),
       },
     );
   }
