@@ -1,38 +1,90 @@
 import 'dart:ui';
 
-import 'package:bluck_buster/features/game/game_page.dart';
+import 'package:bluck_buster/core/utils/constants.dart';
+import 'package:bluck_buster/features/game/bricks_breaker.dart';
+import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/extensions.dart';
+import 'package:flame_audio/flame_audio.dart';
 
-class Paddle extends Component {
-  static const double width = 20;
-  static const double height = 40;
-  double x = 0;
+class Paddle extends SpriteComponent
+    with CollisionCallbacks, HasGameRef<BricksBreaker> {
+  Paddle(Image image)
+      : super.fromImage(
+          image,
+          size: Vector2(50, 10),
+        );
 
-  void moveLeft() {
-    if (x > 0) {
-      x -= 1; // Adjust the speed and direction as needed.
-    }
-  }
+  bool hasCollided = false;
 
-  void moveRight(double gameWidth) {
-    if (x + width < gameWidth) {
-      x += 1; // Adjust the speed and direction as needed.
-    }
+  late final RectangleHitbox rectangleBrickHitBox;
+  late final RectangleComponent rectangleBrick;
+
+  @override
+  Future<void> onLoad() async {
+    position = Vector2(
+      (gameRef.board.size.x / 2) - 20,
+      (gameRef.board.size.y - 20),
+    );
+    rectangleBrick = createBrickRectangleComponent();
+    rectangleBrickHitBox = createBrickRectangleHitbox();
+
+    addAll([
+      // rectangleBrick,
+      rectangleBrickHitBox,
+      // brickText,
+    ]);
   }
 
   @override
-  void render(Canvas canvas) {
-    double centerX = (game.size.x - width) / 2;
-    canvas.drawRect(
-      Rect.fromLTWH(centerX, game.size.y - height, width, height),
-      Paint()
-        ..color = const Color(0xFF00FF00), // Adjust color as needed.
+  void update(double dt) {
+    if (hasCollided) {}
+  }
+
+  @override
+  void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
+    // if (other is Ball && !hasCollided) {
+    //   hasCollided = true;
+    //   handleCollision();
+    // }
+    super.onCollision(intersectionPoints, other);
+  }
+
+  RectangleHitbox createBrickRectangleHitbox() {
+    return RectangleHitbox(
+      size: size,
+    );
+  }
+
+  RectangleComponent createBrickRectangleComponent() {
+    return RectangleComponent(
+      size: size,
+      paint: Paint()
+        ..style = PaintingStyle.fill
+        ..color = const Color(brickColor),
+    );
+  }
+
+  void handleCollision() {
+    FlameAudio.play(ballAudio);
+  }
+
+  void dragPaddle(double xPosition) {
+    position.x = xPosition;
+  }
+
+  void resetPosition() {
+    position = Vector2(
+      (gameRef.board.size.x / 2) - 20,
+      (gameRef.board.size.y - 20),
     );
   }
 
   @override
-  void update(double t) {
-    // Update logic here if needed
+  void onCollisionEnd(PositionComponent other) {
+    if (hasCollided) {
+      hasCollided = false;
+    }
+    super.onCollisionEnd(other);
   }
 }

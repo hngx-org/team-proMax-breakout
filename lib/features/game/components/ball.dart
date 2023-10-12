@@ -1,9 +1,11 @@
 import 'dart:math';
 import 'dart:ui';
+import 'dart:developer'as log;
 import 'package:bluck_buster/core/utils/constants.dart';
 import 'package:bluck_buster/features/game/bricks_breaker.dart';
 import 'package:bluck_buster/features/game/components/board.dart';
 import 'package:bluck_buster/features/game/components/brick.dart';
+import 'package:bluck_buster/features/game/components/paddle.dart';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flutter/material.dart';
@@ -12,16 +14,17 @@ class Ball extends CircleComponent
     with HasGameRef<BricksBreaker>, CollisionCallbacks {
   Ball()
       : super(
-          paint: Paint()..color = const Color(ballColor),
-          radius: ballRadius,
-          children: [CircleHitbox()],
-        );
-
+    paint: Paint()..color = const Color(ballColor),
+    radius: ballRadius,
+    children: [CircleHitbox()],
+  );
   BallState ballState = BallState.ideal;
-  double speed = 1;
+  double speed = 3;
+
   static const degree = pi / 180;
   double xDirection = 0;
   double yDirection = 0;
+
   final nextPosition = Vector2.zero();
 
   double aimAngle = 0;
@@ -43,8 +46,14 @@ class Ball extends CircleComponent
     super.update(dt);
 
     if (position.y >= gameRef.board.size.y - size.y) {
-      position.setFrom(Vector2(position.x, (gameRef.board.size.y - radius * 2) - 2));
-      ballState = BallState.completed;
+      if(gameRef.gameManager.life.value <=1){
+        gameRef.gameOver();
+      }else{
+        gameRef.gameManager.reduceLive();
+      }
+
+      resetBall();
+      gameRef.paddle.resetPosition();
       speed = 1;
     }
 
@@ -69,9 +78,9 @@ class Ball extends CircleComponent
 
   @override
   void onCollisionStart(
-    Set<Vector2> intersectionPoints,
-    PositionComponent other,
-  ) {
+      Set<Vector2> intersectionPoints,
+      PositionComponent other,
+      ) {
     ballState = BallState.ideal;
 
     super.onCollisionStart(intersectionPoints, other);
@@ -84,6 +93,11 @@ class Ball extends CircleComponent
       reflectFromBrick(intersectionPoints, other);
       ballState = BallState.release;
       return;
+    } else if (other is Paddle) {
+      log.log("PADDLE COLLISION");
+      reflectFromPaddle(intersectionPoints, other);
+      ballState = BallState.release;
+      return;
     }
   }
 
@@ -93,7 +107,7 @@ class Ball extends CircleComponent
         intersectionPoints.first.y <=
             gameRef.board.position.y + gameRef.board.size.y;
     final isRightHit = intersectionPoints.first.x >=
-            gameRef.board.position.x + gameRef.board.size.x ||
+        gameRef.board.position.x + gameRef.board.size.x ||
         intersectionPoints.first.y <=
             gameRef.board.position.y + gameRef.board.size.y;
 
@@ -140,10 +154,10 @@ class Ball extends CircleComponent
   }
 
   void cornerReflection(
-    PositionComponent positionComponent,
-    double averageX,
-    double averageY,
-  ) {
+      PositionComponent positionComponent,
+      double averageX,
+      double averageY,
+      ) {
     final margin = size.x / 2;
     final xPosition = positionComponent.position.x;
     final yPosition = positionComponent.position.y;
@@ -171,7 +185,7 @@ class Ball extends CircleComponent
   void resetBall() {
     position = Vector2(
       gameRef.board.size.x / 2,
-      (gameRef.board.size.y - 2 * radius) - 2,
+      (gameRef.board.size.y - 4 * radius) - 2,
     );
     speed = 1;
     ballState = BallState.ideal;
@@ -179,7 +193,7 @@ class Ball extends CircleComponent
     aimTriangleBasePoint = Vector2(size.x / 4, -radius / 2);
     aimPointerBalls = List<Rect>.generate(
       16,
-      (index) => Rect.fromCircle(
+          (index) => Rect.fromCircle(
         center: Offset(
             aimTriangleMidPoint.x, aimTriangleMidPoint.y - (index + 1) * 20),
         radius: 3,
@@ -222,5 +236,24 @@ class Ball extends CircleComponent
         : lerpDouble(145, 215, random)!;
 
     return spawnAngle;
+  }
+
+  void reflectFromPaddle(
+      Set<Vector2> intersectionPoints, PositionComponent positionComponent) {
+    if (intersectionPoints.length == 1) {
+      sideReflection(intersectionPoints.first, positionComponent);
+    } else {
+      final intersectionPointsList = intersectionPoints.toList();
+      final averageX =
+          (intersectionPointsList[0].x + intersectionPointsList[1].x) / 2;
+      final averageY =
+          (intersectionPointsList[0].y + intersectionPointsList[1].y) / 2;
+      if (intersectionPointsList[0].x == intersectionPointsList[1].x ||
+          intersectionPointsList[0].y == intersectionPointsList[1].y) {
+        sideReflection(Vector2(averageX, averageY), positionComponent);
+      } else {
+        cornerReflection(positionComponent, averageX, averageY);
+      }
+    }
   }
 }

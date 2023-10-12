@@ -12,13 +12,13 @@ class Board extends RectangleComponent
     with DragCallbacks, HasGameRef<BricksBreaker> {
   Board()
       : super(
-          paint: Paint()..color = Colors.red,
+          paint: Paint()..color = const Color(0x00000000),
         );
   double dragLineSlope = 0;
   final dragStartPosition = Vector2.zero();
   final dragRelativePosition = Vector2.zero();
   final dividerPainter = Paint()
-    ..color = Colors.black
+    ..color = const Color(0x00000000)
     ..style = PaintingStyle.fill;
   late final Path dividerPath;
   late final Vector2 centerPosition;
@@ -26,6 +26,7 @@ class Board extends RectangleComponent
   @override
   Future<void> onLoad() async {
     size = Vector2(gameRef.size.x, gameRef.size.y);
+
     await add(RectangleHitbox());
     dividerPath = createDividerPath();
     centerPosition = position + (size / 2);
@@ -48,6 +49,8 @@ class Board extends RectangleComponent
     if (isBallInIdealOrDragState()) {
       _updateDragRelatedParameters(event);
       gameRef.ball.priority = 1;
+    } else {
+      _movePaddle(event);
     }
   }
 
@@ -61,7 +64,10 @@ class Board extends RectangleComponent
     if (gameRef.ball.ballState == BallState.ideal) {
       dragStartPosition.setFrom(event.localPosition);
     }
+
+
   }
+
 
   bool isBallInIdealOrDragState() {
     return gameRef.ball.ballState == BallState.ideal ||
@@ -71,9 +77,9 @@ class Board extends RectangleComponent
   void _updateDragRelatedParameters(DragUpdateEvent event) {
     dragRelativePosition.setFrom(event.localPosition - dragStartPosition);
 
-    final absolutePosition = (event.localPosition - dragStartPosition)
+    final absolutePosition = (event.localPosition + dragStartPosition)
       ..absolute();
-    final isValid = absolutePosition.x > 15 || absolutePosition.y > 15;
+    final isValid = absolutePosition.x > 10 || absolutePosition.y > 10;
 
     if (!dragRelativePosition.y.isNegative && isValid) {
       gameRef.ball.ballState = BallState.drag;
@@ -92,7 +98,6 @@ class Board extends RectangleComponent
         !dragRelativePosition.y.isNegative) {
       _handleDragEnd();
     }
-
     super.onDragEnd(event);
     priority = 0;
   }
@@ -134,5 +139,9 @@ class Board extends RectangleComponent
     dragStartPosition.setZero();
     dragRelativePosition.setZero();
     gameRef.ball.ballState = BallState.ideal;
+  }
+
+  void _movePaddle(DragUpdateEvent event) {
+    gameRef.paddle.dragPaddle(event.localPosition.x);
   }
 }

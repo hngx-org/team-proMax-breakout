@@ -1,12 +1,15 @@
 import 'dart:math';
-
+import 'dart:ui';
 import 'package:bluck_buster/core/utils/constants.dart';
 import 'package:bluck_buster/features/game/components/ball.dart';
 import 'package:bluck_buster/features/game/components/board.dart';
 import 'package:bluck_buster/features/game/components/brick.dart';
+import 'package:bluck_buster/features/game/components/paddle.dart';
 import 'package:bluck_buster/features/game/managers/game_manager.dart';
 import 'package:flame/events.dart';
+import 'package:flame/flame.dart';
 import 'package:flame/game.dart';
+import 'package:flutter/material.dart';
 
 class BricksBreaker extends FlameGame
     with HasCollisionDetection, HasKeyboardHandlerComponents {
@@ -15,20 +18,25 @@ class BricksBreaker extends FlameGame
   final GameManager gameManager = GameManager();
   final Ball ball = Ball();
   final Board board = Board();
-  int numberOfBricksLayer = 1;
+  late final Paddle paddle;
+  int numberOfBricksLayer = 2;
   final Random _random = Random();
 
   @override
   Future<void> onLoad() async {
+    final image = await Flame.images.load('paddle.png');
+    paddle = Paddle(image);
     await super.onLoad();
     await add(gameManager);
-
     ball.priority = 1;
-    addAll([
-      board,
-      ball,
-    ]);
+    await addAll([board, ball, paddle]);
     loadInitialBrickLayer();
+    // overlays.add('gameStartOverlay');
+  }
+
+  @override
+  Color backgroundColor() {
+    return Colors.white.withOpacity(0.2);
   }
 
   void resetGame() {
@@ -41,13 +49,13 @@ class BricksBreaker extends FlameGame
     });
 
     gameManager.reset();
-
     ball.resetBall();
     board.resetBoard();
+    paddle.resetPosition();
     resumeEngine();
-
-    numberOfBricksLayer = 1;
+    numberOfBricksLayer = 2;
     loadInitialBrickLayer();
+    // overlays.add('gameStartOverlay');
   }
 
   void togglePauseState() {
@@ -58,6 +66,21 @@ class BricksBreaker extends FlameGame
       overlays.add('gamePauseOverlay');
       pauseEngine();
     }
+  }
+
+  void startGame() {
+    overlays.remove('gameStartOverlay');
+    ball.xDirection = 0;
+    ball.yDirection = -1;
+    final newPosition = Vector2(4, board.y - 3);
+    ball.nextPosition.setFrom(newPosition);
+    ball.ballState = BallState.release;
+    priority = 0;
+  }
+
+  void restartGame() {
+    ball.resetBall();
+    paddle.resetPosition();
   }
 
   double get brickSize {
@@ -72,7 +95,7 @@ class BricksBreaker extends FlameGame
     return List<Brick>.generate(
       numberOfBricksInRow,
       (index) => Brick(
-        brickValue: next(minValueOfBrick, maxValueOfBrick),
+        // brickValue: next(minValueOfBrick, maxValueOfBrick),
         size: brickSize,
         brickRow: row,
         brickColumn: index,
@@ -121,7 +144,7 @@ class BricksBreaker extends FlameGame
   @override
   Future<void> update(double dt) async {
     if (ball.ballState == BallState.completed) {
-      await updateBrickPositions();
+      // await updateBrickPositions();
     }
 
     super.update(dt);
@@ -164,5 +187,14 @@ class BricksBreaker extends FlameGame
 
   void increaseBallSpeed() {
     ball.increaseSpeed();
+  }
+
+  void gameOver() {
+    pauseEngine();
+
+    gameManager.state = GameState.gameOver;
+    ball.ballState = BallState.ideal;
+
+    overlays.add('gameOverOverlay');
   }
 }

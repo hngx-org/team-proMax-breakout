@@ -8,40 +8,51 @@ import 'package:flutter/material.dart';
 
 class GamePage extends StatefulWidget {
   const GamePage({super.key, required this.title});
+
   final String title;
+
   @override
   State<GamePage> createState() => _GamePageState();
 }
 
-final Game game = BricksBreaker();
+final Game game = BricksBreaker()..backgroundColor();
 
 class _GamePageState extends State<GamePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor:  Color(panelColor),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
+      backgroundColor: const Color(0x5bffffff),
+      body: Stack(
+        fit: StackFit.expand,
         children: [
-          const SizedBox(height: 20),
-          GameTopBar(
-            game: game,
+          Image.asset(
+            'assets/images/game-bg.png',
+            fit: BoxFit.cover,
           ),
-          const SizedBox(height: 10),
-          Expanded(
-            child: GameWidget(
-              game: game,
-              overlayBuilderMap: <String, Widget Function(BuildContext, Game)>{
-                'gameOverOverlay': (context, game) => GameOver(
-                      game: game,
-                    ),
-                'gamePauseOverlay': (context, game) => GamePause(
-                      game: game,
-                    ),
-              },
-            ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              const SizedBox(height: 20),
+              GameTopBar(
+                game: game,
+              ),
+              Expanded(
+                child: GameWidget(
+                  game: game,
+                  overlayBuilderMap: <String,
+                      Widget Function(BuildContext, Game)>{
+                    'gameOverOverlay': (context, game) => GameOver(
+                          game: game,
+                        ),
+                    'gamePauseOverlay': (context, game) => GamePause(
+                          game: game,
+                        ),
+                  },
+                ),
+              ),
+              const SizedBox(height: 10)
+            ],
           ),
-          const SizedBox(height: 100)
         ],
       ),
     );

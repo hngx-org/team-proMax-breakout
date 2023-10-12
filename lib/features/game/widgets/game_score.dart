@@ -17,9 +17,11 @@ class GameScore extends StatelessWidget {
       valueListenable: (game as BricksBreaker).gameManager.score,
       builder: (context, value, child) {
         return Text(
-          value.toString(),
+          "Score : ${value.toString()}",
           style: const TextStyle(
-            fontSize: 30,
+            fontSize: 20,
+            color: Colors.white,
+            fontWeight: FontWeight.w600
           ),
         );
       },
