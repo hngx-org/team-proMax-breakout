@@ -1,6 +1,5 @@
 import 'package:bluck_buster/core/utils/constants.dart';
 import 'package:bluck_buster/features/game/bricks_breaker.dart';
-import 'package:bluck_buster/features/game/widgets/game_button.dart';
 import 'package:bluck_buster/features/game/widgets/game_score.dart';
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
@@ -46,7 +45,7 @@ class GamePause extends StatelessWidget {
                   children: [
                     IconButton(
                       icon: Image.asset(
-                        'assets/images/pause.png',
+                        'assets/play.png',
                         height: 40,
                         width: 40,
                         fit: BoxFit.cover,
