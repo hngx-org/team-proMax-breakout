@@ -1,6 +1,6 @@
 import 'dart:math';
 import 'dart:ui';
-import 'dart:developer'as log;
+import 'dart:developer' as log;
 import 'package:bluck_buster/core/utils/constants.dart';
 import 'package:bluck_buster/features/game/bricks_breaker.dart';
 import 'package:bluck_buster/features/game/components/board.dart';
@@ -8,16 +8,19 @@ import 'package:bluck_buster/features/game/components/brick.dart';
 import 'package:bluck_buster/features/game/components/paddle.dart';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
+import 'package:flame/image_composition.dart' as f;
+import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/material.dart';
 
-class Ball extends CircleComponent
+class Ball extends SpriteComponent
     with HasGameRef<BricksBreaker>, CollisionCallbacks {
-  Ball()
-      : super(
-    paint: Paint()..color = const Color(ballColor),
-    radius: ballRadius,
-    children: [CircleHitbox()],
-  );
+  Ball(f.Image image)
+      : super.fromImage(
+          image,
+          paint: Paint()..color = const Color(ballColor),
+          // radius: ballRadius,
+          children: [CircleHitbox()],
+        );
   BallState ballState = BallState.ideal;
   double speed = 3;
 
@@ -36,9 +39,9 @@ class Ball extends CircleComponent
     ..style = PaintingStyle.fill;
 
   @override
-  Future<void> onLoad() {
+  void onLoad() {
     resetBall();
-    return super.onLoad();
+    super.onLoad();
   }
 
   @override
@@ -46,12 +49,13 @@ class Ball extends CircleComponent
     super.update(dt);
 
     if (position.y >= gameRef.board.size.y - size.y) {
-      if(gameRef.gameManager.life.value <=1){
+      if (gameRef.gameManager.life.value <= 1) {
         gameRef.gameOver();
-      }else{
+      } else {
         gameRef.gameManager.reduceLive();
       }
 
+      FlameAudio.play('row_explosion.mp3');
       resetBall();
       gameRef.paddle.resetPosition();
       speed = 1;
@@ -78,9 +82,9 @@ class Ball extends CircleComponent
 
   @override
   void onCollisionStart(
-      Set<Vector2> intersectionPoints,
-      PositionComponent other,
-      ) {
+    Set<Vector2> intersectionPoints,
+    PositionComponent other,
+  ) {
     ballState = BallState.ideal;
 
     super.onCollisionStart(intersectionPoints, other);
@@ -107,7 +111,7 @@ class Ball extends CircleComponent
         intersectionPoints.first.y <=
             gameRef.board.position.y + gameRef.board.size.y;
     final isRightHit = intersectionPoints.first.x >=
-        gameRef.board.position.x + gameRef.board.size.x ||
+            gameRef.board.position.x + gameRef.board.size.x ||
         intersectionPoints.first.y <=
             gameRef.board.position.y + gameRef.board.size.y;
 
@@ -154,10 +158,10 @@ class Ball extends CircleComponent
   }
 
   void cornerReflection(
-      PositionComponent positionComponent,
-      double averageX,
-      double averageY,
-      ) {
+    PositionComponent positionComponent,
+    double averageX,
+    double averageY,
+  ) {
     final margin = size.x / 2;
     final xPosition = positionComponent.position.x;
     final yPosition = positionComponent.position.y;
@@ -184,16 +188,16 @@ class Ball extends CircleComponent
 
   void resetBall() {
     position = Vector2(
-      gameRef.board.size.x / 2,
-      (gameRef.board.size.y - 4 * radius) - 2,
+      (gameRef.board.size.x / 2) - 10,
+      (gameRef.board.size.y - 4 * 12) - 2,
     );
     speed = 1;
     ballState = BallState.ideal;
     aimTriangleMidPoint = Vector2(size.x / 2, -2 * size.y);
-    aimTriangleBasePoint = Vector2(size.x / 4, -radius / 2);
+    aimTriangleBasePoint = Vector2(size.x / 4, -10 / 2);
     aimPointerBalls = List<Rect>.generate(
       16,
-          (index) => Rect.fromCircle(
+      (index) => Rect.fromCircle(
         center: Offset(
             aimTriangleMidPoint.x, aimTriangleMidPoint.y - (index + 1) * 20),
         radius: 3,

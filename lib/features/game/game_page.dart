@@ -1,8 +1,8 @@
-import 'package:bluck_buster/core/utils/constants.dart';
 import 'package:bluck_buster/features/game/bricks_breaker.dart';
 import 'package:bluck_buster/features/game/widgets/game_over.dart';
 import 'package:bluck_buster/features/game/widgets/game_pause.dart';
 import 'package:bluck_buster/features/game/widgets/game_top_bar.dart';
+import 'package:bluck_buster/features/game/widgets/game_won.dart';
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 
@@ -37,17 +37,22 @@ class _GamePageState extends State<GamePage> {
                 game: game,
               ),
               Expanded(
-                child: GameWidget(
-                  game: game,
-                  overlayBuilderMap: <String,
-                      Widget Function(BuildContext, Game)>{
-                    'gameOverOverlay': (context, game) => GameOver(
-                          game: game,
-                        ),
-                    'gamePauseOverlay': (context, game) => GamePause(
-                          game: game,
-                        ),
-                  },
+                child: SizedBox(
+                  height: MediaQuery.of(context).size.height*0.7,
+                  child: GameWidget(
+                    game: game,
+                    overlayBuilderMap: <String,
+                        Widget Function(BuildContext, Game)>{
+                      'gameOverOverlay': (context, game) => GameOver(
+                        game: game,
+                      ),
+                      'gamePauseOverlay': (context, game) => GamePause(
+                        game: game,
+                      ),     'gameWonOverlay': (context, game) => GameWon(
+                        game: game,
+                      ),
+                    },
+                  ),
                 ),
               ),
               const SizedBox(height: 10)

@@ -31,10 +31,10 @@ class Brick extends SpriteComponent
   Future<void> onLoad() async {
     await _loadImages();
 
-    if (false) {
-      removeFromParent();
-      return;
-    }
+    // if (false) {
+    //   removeFromParent();
+    //   return;
+    // }
     //
     // brickText = createBrickTextComponent();
     // rectangleBrick = createBrickRectangleComponent();
@@ -49,6 +49,7 @@ class Brick extends SpriteComponent
 
   @override
   void update(double dt) {
+
     if (hasCollided) {
       // brickText.text = '$brickValue';
     }
@@ -125,8 +126,9 @@ class Brick extends SpriteComponent
     // }
     gameRef.gameManager.increaseScore();
     FlameAudio.play(ballAudio);
-
     removeFromParent();
+
+
     return;
   }
 
