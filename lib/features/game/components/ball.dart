@@ -21,9 +21,9 @@ class Ball extends SpriteComponent
           // radius: ballRadius,
           children: [CircleHitbox()],
         );
+
   BallState ballState = BallState.ideal;
   double speed = 3;
-
   static const degree = pi / 180;
   double xDirection = 0;
   double yDirection = 0;
@@ -40,7 +40,6 @@ class Ball extends SpriteComponent
 
   @override
   void onLoad() {
-    resetBall();
     super.onLoad();
   }
 
@@ -77,6 +76,8 @@ class Ball extends SpriteComponent
         angle: aimAngle,
         drawFunction: () => canvas.drawPath(aimPath, aimPainter),
       );
+    } else if (ballState == BallState.ideal) {
+      resetBall();
     }
   }
 
@@ -188,8 +189,8 @@ class Ball extends SpriteComponent
 
   void resetBall() {
     position = Vector2(
-      (gameRef.board.size.x / 2) - 10,
-      (gameRef.board.size.y - 4 * 12) - 2,
+      (gameRef.size.x / 2) - 10,
+      (gameRef.size.y - 4 * 12) - 2,
     );
     speed = 1;
     ballState = BallState.ideal;

@@ -22,10 +22,7 @@ class Paddle extends SpriteComponent
 
   @override
   Future<void> onLoad() async {
-    position = Vector2(
-      (gameRef.board.size.x / 2) - 20,
-      (gameRef.board.size.y - 20),
-    );
+    resetPosition();
     rectangleBrick = createBrickRectangleComponent();
     rectangleBrickHitBox = createBrickRectangleHitbox();
 
@@ -39,6 +36,15 @@ class Paddle extends SpriteComponent
   @override
   void update(double dt) {
     if (hasCollided) {}
+  }
+
+  @override
+  void render(Canvas canvas) {
+    super.render(canvas);
+
+    if (gameRef.ball.ballState == BallState.ideal) {
+      resetPosition();
+    }
   }
 
   @override
@@ -75,8 +81,8 @@ class Paddle extends SpriteComponent
 
   void resetPosition() {
     position = Vector2(
-      (gameRef.board.size.x / 2) - 20,
-      (gameRef.board.size.y - 20),
+      (gameRef.size.x / 2) - 20,
+      (gameRef.size.y - 20),
     );
   }
 

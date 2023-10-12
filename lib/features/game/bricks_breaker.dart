@@ -35,6 +35,7 @@ class BricksBreaker extends FlameGame
     ball.ballState = BallState.ideal;
     ball.priority = 1;
     loadInitialBrickLayer();
+    resetPositions();
 
     // overlays.add('gameStartOverlay');
   }
@@ -84,7 +85,8 @@ class BricksBreaker extends FlameGame
     priority = 0;
   }
 
-  void restartGame() {
+  void resetPositions() {
+
     ball.resetBall();
     paddle.resetPosition();
   }
@@ -149,11 +151,6 @@ class BricksBreaker extends FlameGame
 
   @override
   Future<void> update(double dt) async {
-    if (gameManager.state != GameState.intro) {
-      if (children.whereType<Brick>().isEmpty) {
-        gameWon();
-      }
-    }
 
     super.update(dt);
   }
@@ -208,7 +205,7 @@ class BricksBreaker extends FlameGame
 
   void gameWon() {
     pauseEngine();
-    gameManager.state = GameState.intro;
+    // gameManager.state = GameState.intro;
     ball.ballState = BallState.ideal;
 
     overlays.add('gameWonOverlay');

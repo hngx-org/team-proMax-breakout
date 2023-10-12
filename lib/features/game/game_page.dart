@@ -38,24 +38,25 @@ class _GamePageState extends State<GamePage> {
               ),
               Expanded(
                 child: SizedBox(
-                  height: MediaQuery.of(context).size.height*0.7,
+                  height: MediaQuery.of(context).size.height * 0.7,
                   child: GameWidget(
                     game: game,
                     overlayBuilderMap: <String,
                         Widget Function(BuildContext, Game)>{
                       'gameOverOverlay': (context, game) => GameOver(
-                        game: game,
-                      ),
+                            game: game,
+                          ),
                       'gamePauseOverlay': (context, game) => GamePause(
-                        game: game,
-                      ),     'gameWonOverlay': (context, game) => GameWon(
-                        game: game,
-                      ),
+                            game: game,
+                          ),
+                      'gameWonOverlay': (context, game) => GameWon(
+                            game: game,
+                          ),
                     },
                   ),
                 ),
               ),
-              const SizedBox(height: 10)
+               Container(color:Colors.white.withOpacity(0.2),height: 70)
             ],
           ),
         ],
