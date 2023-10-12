@@ -4,6 +4,9 @@ const kcPrimaryColor = Color(0xff100D51);
 const kcAccentColor = Color(0xff5D58D7);
 const kcGoldColor = Color(0xffFABA0F);
 
+//Rive Animation
+const String teamProMax = 'assets/promax.riv';
+
 //Assets used for App
 const String ball = 'assets/ball.png';
 const String gameBckgrnd = 'assets/game-bckgrnd.png';

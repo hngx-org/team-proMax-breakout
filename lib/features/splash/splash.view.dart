@@ -1,5 +1,6 @@
 import 'package:bluck_buster/components/shared/app_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:rive/rive.dart';
 
 class SplashView extends StatefulWidget {
   const SplashView({super.key});
@@ -13,7 +14,7 @@ class _SplashViewState extends State<SplashView> {
   void initState() {
     super.initState();
     Future.delayed(
-      const Duration(seconds: 3),
+      const Duration(seconds: 4),
     ).then(
       (value) => Navigator.pushReplacementNamed(
         context,
@@ -24,11 +25,11 @@ class _SplashViewState extends State<SplashView> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       backgroundColor: Colors.white,
       body: Center(
-        child: Image.asset(
-          splashFirst,
+        child: RiveAnimation.asset(
+          teamProMax,
         ),
       ),
     );
