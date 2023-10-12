@@ -1,7 +1,7 @@
-import 'package:bluck_buster/features/game/game_page.dart';
-import 'package:bluck_buster/components/shared/app_colors.dart';
 import 'package:flutter/material.dart';
-import 'package:rive/rive.dart';
+import 'package:lottie/lottie.dart';
+
+import '/components/shared/app_colors.dart';
 
 class SplashView extends StatefulWidget {
   const SplashView({super.key});
@@ -15,7 +15,7 @@ class _SplashViewState extends State<SplashView> {
   void initState() {
     super.initState();
     Future.delayed(
-      const Duration(seconds: 4),
+      const Duration(seconds: 3),
     ).then(
       (value) => Navigator.pushReplacementNamed(
         context,
@@ -25,21 +25,13 @@ class _SplashViewState extends State<SplashView> {
   }
 
   @override
-  void initState() {
-    Future.delayed(const Duration(seconds: 3)).then(
-        (value) => Navigator.of(context).pushReplacement(MaterialPageRoute(
-              builder: (context) => const GamePage(title: "bj"),
-            )));
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       backgroundColor: Colors.white,
       body: Center(
-        child: RiveAnimation.asset(
+        child: Lottie.asset(
           teamProMax,
+          height: MediaQuery.of(context).size.height * 0.7,
         ),
       ),
     );

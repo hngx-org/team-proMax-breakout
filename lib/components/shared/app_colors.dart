@@ -4,8 +4,9 @@ const kcPrimaryColor = Color(0xff100D51);
 const kcAccentColor = Color(0xff5D58D7);
 const kcGoldColor = Color(0xffFABA0F);
 
-//Rive Animation
-const String teamProMax = 'assets/promax.riv';
+//Lottie Animation
+const String teamProMax = 'assets/promax.json';
+const String loading = 'assets/loading.json';
 
 //Assets used for App
 const String ball = 'assets/ball.png';
