@@ -8,6 +8,7 @@ const newColor = Color(0xffEE5200);
 //Lottie Animation
 const String teamProMax = 'assets/promax.json';
 const String loading = 'assets/loading.json';
+const String wonGame = 'assets/win.json';
 
 //Assets used for App
 const String ball = 'assets/ball.png';
