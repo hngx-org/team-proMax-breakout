@@ -1,7 +1,12 @@
+import 'package:bluck_buster/features/game/game_page.dart';
 import 'package:flutter/material.dart';
+
+import 'features/splash/next.splash.view.dart';
 import 'features/splash/splash.view.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
   runApp(
     const MyApp(),
   );
@@ -14,6 +19,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
           seedColor: Colors.deepPurple,
@@ -21,6 +27,11 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       home: const SplashView(),
+      routes: {
+        '/nextSplash': (context) => const NextSplash(),
+        // '/menuScreen': (context) => const GameMenu(),
+        '/gameScreen': (context) => const GamePage(),
+      },
     );
   }
 }
