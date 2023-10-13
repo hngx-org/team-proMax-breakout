@@ -1,7 +1,5 @@
-
 import 'package:bluck_buster/core/utils/constants.dart';
 import 'package:bluck_buster/features/game/bricks_breaker.dart';
-import 'package:bluck_buster/features/game/widgets/game_button.dart';
 import 'package:bluck_buster/features/game/widgets/game_score.dart';
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
@@ -28,38 +26,77 @@ class GamePause extends StatelessWidget {
             children: [
               const Center(
                 child: Text(
-                  'PAUSE',
-                  style: TextStyle(fontSize: 24, color: Colors.white),
+                  'GAME PAUSED',
+                  style: TextStyle(
+                      fontSize: 24,
+                      color: Colors.white,
+                      fontWeight: FontWeight.w500),
                 ),
-              ),
-              const SizedBox(height: 20),
-              const Text(
-                'SCORE',
-                style: TextStyle(fontSize: 18, color: Colors.white),
               ),
               const SizedBox(height: 10),
               GameScore(
                 game: game,
               ),
               const SizedBox(height: 20),
-              GameButton(
+
+              Center(
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    IconButton(
+                      icon: Image.asset(
+                        'assets/play.png',
+                        height: 40,
+                        width: 40,
+                        fit: BoxFit.cover,
+                      ),
+                      onPressed: () {
+                        (game as BricksBreaker).togglePauseState();
+                      },
+                    ),
+                    IconButton(
+                      icon: Image.asset(
+                        'assets/images/reload.png',
+                        height: 40,
+                        width: 40,
+                        fit: BoxFit.cover,
+                      ),
+                      onPressed: () {
+                        (game as BricksBreaker).resetGame();
+                      },
+                    ),
+                  ],
+                ),
+              ),
+              IconButton(
+                icon: Image.asset(
+                  'assets/images/home.png',
+                  height: 40,
+                  width: 40,
+                  fit: BoxFit.cover,
+                ),
                 onPressed: () {
                   (game as BricksBreaker).togglePauseState();
                 },
-                title: 'CONTINUE',
-                color: continueButtonColor,
-                width: 200,
               ),
-              const SizedBox(height: 20),
-              GameButton(
-                onPressed: () {
-                  (game as BricksBreaker).resetGame();
-                },
-                title: 'RESTART',
-                color: restartButtonColor,
-                width: 200,
-              ),
-              const SizedBox(height: 10),
+              // GameButton(
+              //   onPressed: () {
+              //     (game as BricksBreaker).togglePauseState();
+              //   },
+              //   title: 'CONTINUE',
+              //   color: continueButtonColor,
+              //   width: 200,
+              // ),
+              // const SizedBox(height: 20),
+              // GameButton(
+              //   onPressed: () {
+              //     (game as BricksBreaker).resetGame();
+              //   },
+              //   title: 'RESTART',
+              //   color: restartButtonColor,
+              //   width: 200,
+              // ),
+              // const SizedBox(height: 10),
             ],
           ),
         ),

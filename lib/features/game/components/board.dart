@@ -1,9 +1,8 @@
 import 'dart:math';
-
+import 'dart:developer' as d;
 import 'package:bluck_buster/core/utils/constants.dart';
 import 'package:bluck_buster/features/game/bricks_breaker.dart';
 import 'package:flame/collisions.dart';
-
 import 'package:flame/components.dart';
 import 'package:flame/events.dart';
 import 'package:flutter/material.dart';
@@ -26,7 +25,6 @@ class Board extends RectangleComponent
   @override
   Future<void> onLoad() async {
     size = Vector2(gameRef.size.x, gameRef.size.y);
-
     await add(RectangleHitbox());
     dividerPath = createDividerPath();
     centerPosition = position + (size / 2);
@@ -40,6 +38,7 @@ class Board extends RectangleComponent
 
   @override
   void onDragStart(DragStartEvent event) {
+
     super.onDragStart(event);
     _handleDragStart(event);
   }
@@ -61,13 +60,11 @@ class Board extends RectangleComponent
   }
 
   _handleDragStart(DragStartEvent event) {
+    d.log("DRAG STARTED${gameRef.ball.ballState.name}");
     if (gameRef.ball.ballState == BallState.ideal) {
-      dragStartPosition.setFrom(event.localPosition);
+      dragStartPosition.setFrom(event.localPosition.xx);
     }
-
-
   }
-
 
   bool isBallInIdealOrDragState() {
     return gameRef.ball.ballState == BallState.ideal ||

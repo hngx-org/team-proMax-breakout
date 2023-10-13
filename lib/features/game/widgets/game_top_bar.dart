@@ -19,6 +19,7 @@ class GameTopBar extends StatelessWidget {
         padding: const EdgeInsets.fromLTRB(14, 25, 14, 8),
         child: Wrap(
           // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: WrapCrossAlignment.center,
           children: [
             IconButton(
               icon: Image.asset(

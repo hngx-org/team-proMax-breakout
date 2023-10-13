@@ -9,11 +9,13 @@ class GameButton extends StatelessWidget {
     this.width = double.infinity,
     this.fontSize = 18,
     Key? key,
+    this.fgColor,
   }) : super(key: key);
 
   final String title;
   final VoidCallback onPressed;
   final Color color;
+  final Color? fgColor;
   final double height;
   final double width;
   final double fontSize;
@@ -26,12 +28,15 @@ class GameButton extends StatelessWidget {
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
           backgroundColor: color,
+          padding: const EdgeInsets.all(20),
           textStyle: TextStyle(fontSize: fontSize),
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(height / 2))),
         ),
         onPressed: onPressed,
-        child: Text(title),
+        child: Text(
+          title,
+        ),
       ),
     );
   }

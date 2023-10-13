@@ -31,10 +31,10 @@ class Brick extends SpriteComponent
   Future<void> onLoad() async {
     await _loadImages();
 
-    if (false) {
-      removeFromParent();
-      return;
-    }
+    // if (false) {
+    //   removeFromParent();
+    //   return;
+    // }
     //
     // brickText = createBrickTextComponent();
     // rectangleBrick = createBrickRectangleComponent();
@@ -60,6 +60,10 @@ class Brick extends SpriteComponent
       hasCollided = true;
       handleCollision();
     }
+    if (children.whereType<Brick>().length == 1) {
+      gameRef.gameWon();
+    }
+
     super.onCollision(intersectionPoints, other);
   }
 
@@ -74,28 +78,6 @@ class Brick extends SpriteComponent
 
     return false;
   }
-
-  // TextComponent createBrickTextComponent() {
-  //   return TextComponent(
-  //     text: generateBrickText(),
-  //     textRenderer: TextPaint(
-  //       style: const TextStyle(
-  //         color: Color(brickFontColor),
-  //         fontSize: brickFontSize, //30,
-  //       ),
-  //     ),
-  //   )..center = size / 2;
-  // }
-
-  // String generateBrickText() {
-  //   if (generateWithProbability(powerUpProbability)) {
-  //     return brickRowRemoverText;
-  //   } else if (generateWithProbability(powerUpProbability)) {
-  //     return brickColumnRemoverText;
-  //   } else {
-  //     return '$brickValue';
-  //   }
-  // }
 
   RectangleHitbox createBrickRectangleHitbox() {
     return RectangleHitbox(
@@ -113,20 +95,20 @@ class Brick extends SpriteComponent
   }
 
   void handleCollision() {
-    // if (brickText.text == brickRowRemoverText) {
-    //   gameRef.removeBrickLayerRow(brickRow);
-    //   FlameAudio.play(brickRowRemoverAudio);
-    //   return;
-    // }
-    // if (brickText.text == brickColumnRemoverText) {
-    //   gameRef.removeBrickLayerColumn(brickColumn);
-    //   FlameAudio.play(brickColumnRemoverAudio);
-    //   return;
-    // }
     gameRef.gameManager.increaseScore();
     FlameAudio.play(ballAudio);
-
     removeFromParent();
+
+    if (gameRef.children.whereType<Brick>().length == 1) {
+      gameRef.gameWon();
+    } else if (gameRef.children.whereType<Brick>().length == 2) {
+      if (gameRef.children
+          .whereType<Brick>()
+          .every((element) => element.hasCollided)) {
+        gameRef.gameWon();
+      }
+    }
+
     return;
   }
 
