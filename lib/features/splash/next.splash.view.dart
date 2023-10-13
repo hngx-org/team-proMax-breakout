@@ -14,7 +14,7 @@ class _NextSplashState extends State<NextSplash> {
   void initState() {
     super.initState();
     Future.delayed(
-      const Duration(seconds: 3),
+      const Duration(seconds: 4),
     ).then(
       (value) => Navigator.pushReplacementNamed(context, '/gameScreen'),
     );

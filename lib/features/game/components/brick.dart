@@ -126,6 +126,7 @@ class Brick extends SpriteComponent
       'blue_brick.png',
       'red_brick.png',
       'grey_brick.png',
+      'green_brick.png',
     ];
     // var image = Flame.images.loadAll(['blue_brick.png']);
     var randomIndex = r.nextInt(images.length);

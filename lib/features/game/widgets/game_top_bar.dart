@@ -17,6 +17,7 @@ class GameTopBar extends StatelessWidget {
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
     return Container(
+      width: width,
       color: Colors.white.withOpacity(0.2),
       padding: EdgeInsets.symmetric(
           horizontal: width * 0.025, vertical: height * 0.035),

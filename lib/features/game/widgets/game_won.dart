@@ -41,8 +41,9 @@ class _GameWonState extends State<GameWon> {
           children: [
             Lottie.asset(
               wonGame,
-              height: height * 0.3,
+              height: height * 0.32,
             ),
+            SizedBox(height: height * 0.02),
             const Center(
               child: Text(
                 'YOU WON',
