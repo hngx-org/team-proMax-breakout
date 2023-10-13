@@ -34,68 +34,67 @@ class _GameWonState extends State<GameWon> {
     return Material(
       color: const Color(panelColor),
       child: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Lottie.asset(wonGame),
-              SizedBox(height: height * 0.03),
-              const Center(
-                child: Text(
-                  'YOU WON',
-                  style: TextStyle(
-                      fontFamily: 'Khand',
-                      fontSize: 40,
-                      color: Colors.white,
-                      fontWeight: FontWeight.w600),
-                ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Lottie.asset(
+              wonGame,
+              height: height * 0.3,
+            ),
+            const Center(
+              child: Text(
+                'YOU WON',
+                style: TextStyle(
+                    fontFamily: 'Khand',
+                    fontSize: 40,
+                    color: Colors.white,
+                    fontWeight: FontWeight.w600),
               ),
-              SizedBox(height: height * 0.02),
-              GameScore(
-                game: widget.game,
-              ),
-              SizedBox(height: height * 0.02),
-              Center(
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    IconButton(
-                      icon: Image.asset(
-                        'assets/images/home.png',
-                        height: 50,
-                        width: 50,
-                        fit: BoxFit.cover,
-                      ),
-                      onPressed: () {
-                        (widget.game as BricksBreaker).togglePauseState();
-                        AudioPlayer().play(
-                          AssetSource('audio/press.mp3'),
-                        );
-                      },
+            ),
+            SizedBox(height: height * 0.02),
+            GameScore(
+              game: widget.game,
+            ),
+            SizedBox(height: height * 0.02),
+            Center(
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  IconButton(
+                    icon: Image.asset(
+                      'assets/images/home.png',
+                      height: 50,
+                      width: 50,
+                      fit: BoxFit.cover,
                     ),
-                    SizedBox(width: MediaQuery.of(context).size.width * 0.07),
-                    IconButton(
-                      icon: Image.asset(
-                        'assets/images/reload.png',
-                        height: 50,
-                        width: 50,
-                        fit: BoxFit.cover,
-                      ),
-                      onPressed: () {
-                        (widget.game as BricksBreaker).resetGame();
-                        AudioPlayer().play(
-                          AssetSource('audio/press.mp3'),
-                        );
-                      },
+                    onPressed: () {
+                      (widget.game as BricksBreaker).togglePauseState();
+                      AudioPlayer().play(
+                        AssetSource('audio/press.mp3'),
+                      );
+                    },
+                  ),
+                  SizedBox(width: MediaQuery.of(context).size.width * 0.07),
+                  IconButton(
+                    icon: Image.asset(
+                      'assets/images/reload.png',
+                      height: 50,
+                      width: 50,
+                      fit: BoxFit.cover,
                     ),
-                  ],
-                ),
+                    onPressed: () {
+                      (widget.game as BricksBreaker).resetGame();
+                      AudioPlayer().play(
+                        AssetSource('audio/press.mp3'),
+                      );
+                    },
+                  ),
+                ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
