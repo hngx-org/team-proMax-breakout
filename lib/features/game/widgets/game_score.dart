@@ -21,7 +21,7 @@ class GameScore extends StatelessWidget {
             fontFamily: 'Knewave',
             fontSize: 20,
             color: Colors.white,
-            fontWeight: FontWeight.w600,
+            fontWeight: FontWeight.w400,
           ),
         );
       },

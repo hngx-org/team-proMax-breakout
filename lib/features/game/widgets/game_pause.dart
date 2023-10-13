@@ -2,6 +2,7 @@ import 'package:bluck_buster/core/utils/constants.dart';
 import 'package:bluck_buster/features/game/bricks_breaker.dart';
 import 'package:bluck_buster/features/game/widgets/game_score.dart';
 import 'package:flame/game.dart';
+import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/material.dart';
 
 class GamePause extends StatelessWidget {
@@ -14,6 +15,7 @@ class GamePause extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final height = MediaQuery.of(context).size.height;
     return Material(
       color: const Color(panelColor),
       child: Center(
@@ -28,16 +30,17 @@ class GamePause extends StatelessWidget {
                 child: Text(
                   'GAME PAUSED',
                   style: TextStyle(
-                      fontSize: 24,
+                      fontFamily: 'Khand',
+                      fontSize: 40,
                       color: Colors.white,
-                      fontWeight: FontWeight.w500),
+                      fontWeight: FontWeight.w600),
                 ),
               ),
-              const SizedBox(height: 10),
+              SizedBox(height: height * 0.02),
               GameScore(
                 game: game,
               ),
-              const SizedBox(height: 20),
+              SizedBox(height: height * 0.02),
 
               Center(
                 child: Row(
@@ -46,37 +49,48 @@ class GamePause extends StatelessWidget {
                     IconButton(
                       icon: Image.asset(
                         'assets/play.png',
-                        height: 40,
-                        width: 40,
+                        height: 50,
+                        width: 50,
                         fit: BoxFit.cover,
                       ),
                       onPressed: () {
                         (game as BricksBreaker).togglePauseState();
+                        AudioPlayer().play(
+                          AssetSource('audio/press.mp3'),
+                        );
                       },
                     ),
+                    SizedBox(width: MediaQuery.of(context).size.width * 0.07),
                     IconButton(
                       icon: Image.asset(
                         'assets/images/reload.png',
-                        height: 40,
-                        width: 40,
+                        height: 50,
+                        width: 50,
                         fit: BoxFit.cover,
                       ),
                       onPressed: () {
                         (game as BricksBreaker).resetGame();
+                        AudioPlayer().play(
+                          AssetSource('audio/press.mp3'),
+                        );
                       },
                     ),
                   ],
                 ),
               ),
+              SizedBox(height: height * 0.01),
               IconButton(
                 icon: Image.asset(
                   'assets/images/home.png',
-                  height: 40,
-                  width: 40,
+                  height: 50,
+                  width: 50,
                   fit: BoxFit.cover,
                 ),
                 onPressed: () {
                   (game as BricksBreaker).togglePauseState();
+                  AudioPlayer().play(
+                    AssetSource('audio/press.mp3'),
+                  );
                 },
               ),
               // GameButton(

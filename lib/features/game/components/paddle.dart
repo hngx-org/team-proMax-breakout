@@ -12,7 +12,7 @@ class Paddle extends SpriteComponent
   Paddle(Image image)
       : super.fromImage(
           image,
-          size: Vector2(50, 10),
+          size: Vector2(90, 15),
         );
 
   bool hasCollided = false;

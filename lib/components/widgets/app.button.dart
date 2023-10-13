@@ -14,13 +14,6 @@ class AppBTN extends StatelessWidget {
     this.onTap,
   });
 
-  const AppBTN.outline({
-    super.key,
-    required this.title,
-    this.onTap,
-    this.color,
-  });
-
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;

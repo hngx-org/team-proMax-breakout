@@ -86,7 +86,6 @@ class BricksBreaker extends FlameGame
   }
 
   void resetPositions() {
-
     ball.resetBall();
     paddle.resetPosition();
   }
@@ -151,7 +150,6 @@ class BricksBreaker extends FlameGame
 
   @override
   Future<void> update(double dt) async {
-
     super.update(dt);
   }
 
