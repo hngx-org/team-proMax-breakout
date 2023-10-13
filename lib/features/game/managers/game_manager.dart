@@ -1,4 +1,3 @@
-
 import 'package:bluck_buster/features/game/bricks_breaker.dart';
 import 'package:flame/components.dart';
 import 'package:flutter/material.dart';
@@ -21,7 +20,7 @@ class GameManager extends Component with HasGameRef<BricksBreaker> {
   }
 
   void reduceLive() {
-    life.value -=1;
+    life.value -= 1;
   }
 
   void increaseLife() {

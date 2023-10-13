@@ -16,7 +16,7 @@ class BricksBreaker extends FlameGame
   BricksBreaker({super.children});
 
   final GameManager gameManager = GameManager();
-  final Ball ball = Ball();
+  late final Ball ball;
   final Board board = Board();
   late final Paddle paddle;
   int numberOfBricksLayer = 2;
@@ -24,13 +24,19 @@ class BricksBreaker extends FlameGame
 
   @override
   Future<void> onLoad() async {
-    final image = await Flame.images.load('paddle.png');
-    paddle = Paddle(image);
     await super.onLoad();
-    await add(gameManager);
-    ball.priority = 1;
+
+    final image = await Flame.images.load('paddle.png');
+    final ballImage = await Flame.images.load('ball.png');
+    ball = Ball(ballImage);
+    paddle = Paddle(image);
     await addAll([board, ball, paddle]);
+    await add(gameManager);
+    ball.ballState = BallState.ideal;
+    ball.priority = 1;
     loadInitialBrickLayer();
+    resetPositions();
+
     // overlays.add('gameStartOverlay');
   }
 
@@ -43,6 +49,7 @@ class BricksBreaker extends FlameGame
     pauseEngine();
     overlays.remove('gamePauseOverlay');
     overlays.remove('gameOverOverlay');
+    overlays.remove('gameWonOverlay');
 
     children.whereType<Brick>().forEach((brick) {
       brick.removeFromParent();
@@ -78,7 +85,8 @@ class BricksBreaker extends FlameGame
     priority = 0;
   }
 
-  void restartGame() {
+  void resetPositions() {
+
     ball.resetBall();
     paddle.resetPosition();
   }
@@ -143,9 +151,6 @@ class BricksBreaker extends FlameGame
 
   @override
   Future<void> update(double dt) async {
-    if (ball.ballState == BallState.completed) {
-      // await updateBrickPositions();
-    }
 
     super.update(dt);
   }
@@ -196,5 +201,13 @@ class BricksBreaker extends FlameGame
     ball.ballState = BallState.ideal;
 
     overlays.add('gameOverOverlay');
+  }
+
+  void gameWon() {
+    pauseEngine();
+    // gameManager.state = GameState.intro;
+    ball.ballState = BallState.ideal;
+
+    overlays.add('gameWonOverlay');
   }
 }
