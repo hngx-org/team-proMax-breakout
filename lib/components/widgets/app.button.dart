@@ -75,7 +75,10 @@ class AppDIALOG extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Lottie.asset(teamProMax),
+            Lottie.asset(
+              soon,
+              height: height * 0.14,
+            ),
             SizedBox(
               height: height * 0.02,
             ),
