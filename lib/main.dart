@@ -1,6 +1,7 @@
 import 'package:bluck_buster/features/game/game_page.dart';
 import 'package:flutter/material.dart';
 
+import 'features/menu/menu.view.dart';
 import 'features/splash/next.splash.view.dart';
 import 'features/splash/splash.view.dart';
 
@@ -29,7 +30,7 @@ class MyApp extends StatelessWidget {
       home: const SplashView(),
       routes: {
         '/nextSplash': (context) => const NextSplash(),
-        // '/menuScreen': (context) => const GameMenu(),
+        '/menuScreen': (context) => const GameMenu(),
         '/gameScreen': (context) => const GamePage(),
       },
     );

@@ -9,6 +9,8 @@ const newColor = Color(0xffEE5200);
 const String teamProMax = 'assets/promax.json';
 const String loading = 'assets/loading.json';
 const String wonGame = 'assets/win.json';
+const String menuAn = 'assets/menuAn.json';
+const String soon = 'assets/comingSoon.json';
 
 //Assets used for App
 const String ball = 'assets/ball.png';
