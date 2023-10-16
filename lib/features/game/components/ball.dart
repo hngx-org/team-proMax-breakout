@@ -22,7 +22,7 @@ class Ball extends SpriteComponent
           children: [CircleHitbox()],
         );
 
-  BallState ballState = BallState.ideal;
+  BallState ballState = BallState.idle;
   double speed = 3;
   static const degree = pi / 180;
   double xDirection = 0;
@@ -76,7 +76,7 @@ class Ball extends SpriteComponent
         angle: aimAngle,
         drawFunction: () => canvas.drawPath(aimPath, aimPainter),
       );
-    } else if (ballState == BallState.ideal) {
+    } else if (ballState == BallState.idle) {
       resetBall();
     }
   }
@@ -86,7 +86,7 @@ class Ball extends SpriteComponent
     Set<Vector2> intersectionPoints,
     PositionComponent other,
   ) {
-    ballState = BallState.ideal;
+    ballState = BallState.idle;
 
     super.onCollisionStart(intersectionPoints, other);
 
@@ -129,10 +129,8 @@ class Ball extends SpriteComponent
       sideReflection(intersectionPoints.first, positionComponent);
     } else {
       final intersectionPointsList = intersectionPoints.toList();
-      final averageX =
-          (intersectionPointsList[0].x + intersectionPointsList[1].x) / 2;
-      final averageY =
-          (intersectionPointsList[0].y + intersectionPointsList[1].y) / 2;
+      final averageX = (intersectionPointsList[0].x + intersectionPointsList[1].x) / 2;
+      final averageY = (intersectionPointsList[0].y + intersectionPointsList[1].y) / 2;
       if (intersectionPointsList[0].x == intersectionPointsList[1].x ||
           intersectionPointsList[0].y == intersectionPointsList[1].y) {
         sideReflection(Vector2(averageX, averageY), positionComponent);
@@ -166,10 +164,8 @@ class Ball extends SpriteComponent
     final margin = size.x / 2;
     final xPosition = positionComponent.position.x;
     final yPosition = positionComponent.position.y;
-    final leftHalf =
-        xPosition - margin <= averageX && averageX < xPosition + margin;
-    final topHalf =
-        yPosition - margin <= averageY && averageY < yPosition + margin;
+    final leftHalf = xPosition - margin <= averageX && averageX < xPosition + margin;
+    final topHalf = yPosition - margin <= averageY && averageY < yPosition + margin;
 
     xDirection = leftHalf ? -1 : 1;
     yDirection = topHalf ? -1 : 1;
@@ -193,7 +189,7 @@ class Ball extends SpriteComponent
       (gameRef.size.y - 4 * 12) - 2,
     );
     speed = 1;
-    ballState = BallState.ideal;
+    ballState = BallState.idle;
     aimTriangleMidPoint = Vector2(size.x / 2, -2 * size.y);
     aimTriangleBasePoint = Vector2(size.x / 4, -10 / 2);
     aimPointerBalls = List<Rect>.generate(
@@ -233,15 +229,15 @@ class Ball extends SpriteComponent
     return path..close();
   }
 
-  double get getSpawnAngle {
-    final sideToThrow = Random().nextBool();
-    final random = Random().nextDouble();
-    final spawnAngle = sideToThrow
-        ? lerpDouble(-35, 35, random)!
-        : lerpDouble(145, 215, random)!;
-
-    return spawnAngle;
-  }
+  // double get getSpawnAngle {
+  //   final sideToThrow = Random().nextBool();
+  //   final random = Random().nextDouble();
+  //   final spawnAngle = sideToThrow
+  //       ? lerpDouble(-35, 35, random)!
+  //       : lerpDouble(145, 215, random)!;
+  //
+  //   return spawnAngle;
+  // }
 
   void reflectFromPaddle(
       Set<Vector2> intersectionPoints, PositionComponent positionComponent) {
@@ -251,10 +247,8 @@ class Ball extends SpriteComponent
       final intersectionPointsList = intersectionPoints.toList();
       final averageX =
           (intersectionPointsList[0].x + intersectionPointsList[1].x) / 2;
-      final averageY =
-          (intersectionPointsList[0].y + intersectionPointsList[1].y) / 2;
-      if (intersectionPointsList[0].x == intersectionPointsList[1].x ||
-          intersectionPointsList[0].y == intersectionPointsList[1].y) {
+      final averageY = (intersectionPointsList[0].y + intersectionPointsList[1].y) / 2;
+      if (intersectionPointsList[0].x == intersectionPointsList[1].x || intersectionPointsList[0].y == intersectionPointsList[1].y) {
         sideReflection(Vector2(averageX, averageY), positionComponent);
       } else {
         cornerReflection(positionComponent, averageX, averageY);

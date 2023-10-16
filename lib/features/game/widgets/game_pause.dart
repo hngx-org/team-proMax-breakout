@@ -1,6 +1,7 @@
 import 'package:bluck_buster/core/utils/constants.dart';
 import 'package:bluck_buster/features/game/bricks_breaker.dart';
 import 'package:bluck_buster/features/game/widgets/game_score.dart';
+import 'package:bluck_buster/features/menu/menu.view.dart';
 import 'package:flame/game.dart';
 import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/material.dart';
@@ -87,7 +88,11 @@ class GamePause extends StatelessWidget {
                   fit: BoxFit.cover,
                 ),
                 onPressed: () {
-                  (game as BricksBreaker).togglePauseState();
+                  Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const GameMenu(),
+                      ));
                   AudioPlayer().play(
                     AssetSource('audio/press.mp3'),
                   );

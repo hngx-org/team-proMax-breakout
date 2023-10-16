@@ -9,15 +9,25 @@ import 'package:flutter/material.dart';
 class GamePage extends StatefulWidget {
   const GamePage({
     super.key,
+    required this.initialLevel,
   });
+
+  final int initialLevel;
 
   @override
   State<GamePage> createState() => _GamePageState();
 }
 
-final Game game = BricksBreaker()..backgroundColor();
+Game? game;
 
 class _GamePageState extends State<GamePage> {
+  @override
+  void initState() {
+    super.initState();
+      game = BricksBreaker(widget.initialLevel);
+
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,13 +44,13 @@ class _GamePageState extends State<GamePage> {
             children: [
               const SizedBox(height: 20),
               GameTopBar(
-                game: game,
+                game: game!,
               ),
               Expanded(
                 child: SizedBox(
                   height: MediaQuery.of(context).size.height * 0.7,
                   child: GameWidget(
-                    game: game,
+                    game: game!,
                     overlayBuilderMap: <String,
                         Widget Function(BuildContext, Game)>{
                       'gameOverOverlay': (context, game) => GameOver(
@@ -56,7 +66,7 @@ class _GamePageState extends State<GamePage> {
                   ),
                 ),
               ),
-               Container(color:Colors.white.withOpacity(0.2),height: 70)
+              Container(color: Colors.white.withOpacity(0.2), height: 70)
             ],
           ),
         ],

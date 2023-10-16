@@ -1,5 +1,6 @@
 import 'package:bluck_buster/core/utils/constants.dart';
-import 'package:bluck_buster/features/game/game_page.dart';
+import 'package:bluck_buster/features/game/level_screen.dart';
+
 import 'package:flutter/material.dart';
 
 class BricksBreakerGame extends StatelessWidget {
@@ -13,7 +14,7 @@ class BricksBreakerGame extends StatelessWidget {
       // builder: Authenticator.builder(),
       title: gameTitle,
       theme: ThemeData.dark(),
-      home: const GamePage(),
+      home: const LevelScreen(),
     );
   }
 }

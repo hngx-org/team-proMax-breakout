@@ -13,26 +13,29 @@ import 'package:flutter/material.dart';
 
 class BricksBreaker extends FlameGame
     with HasCollisionDetection, HasKeyboardHandlerComponents {
-  BricksBreaker({super.children});
+  BricksBreaker(this.initialLevel, {super.children});
+
+  final int initialLevel;
 
   final GameManager gameManager = GameManager();
   late final Ball ball;
   final Board board = Board();
   late final Paddle paddle;
-  int numberOfBricksLayer = 2;
+
+  // int numberOfBricksLayer = 5;
   final Random _random = Random();
 
   @override
   Future<void> onLoad() async {
     await super.onLoad();
-
     final image = await Flame.images.load('paddle.png');
     final ballImage = await Flame.images.load('ball.png');
     ball = Ball(ballImage);
     paddle = Paddle(image);
     await addAll([board, ball, paddle]);
     await add(gameManager);
-    ball.ballState = BallState.ideal;
+    gameManager.setCurrentLevel(initialLevel);
+    ball.ballState = BallState.idle;
     ball.priority = 1;
     loadInitialBrickLayer();
     resetPositions();
@@ -50,17 +53,51 @@ class BricksBreaker extends FlameGame
     overlays.remove('gamePauseOverlay');
     overlays.remove('gameOverOverlay');
     overlays.remove('gameWonOverlay');
-
     children.whereType<Brick>().forEach((brick) {
       brick.removeFromParent();
     });
-
     gameManager.reset();
     ball.resetBall();
     board.resetBoard();
     paddle.resetPosition();
     resumeEngine();
-    numberOfBricksLayer = 2;
+    // numberOfBricksLayer = 2;
+    loadInitialBrickLayer();
+    // overlays.add('gameStartOverlay');
+  }
+
+  void goToNextLevel() {
+    pauseEngine();
+    overlays.remove('gamePauseOverlay');
+    overlays.remove('gameOverOverlay');
+    overlays.remove('gameWonOverlay');
+    children.whereType<Brick>().forEach((brick) {
+      brick.removeFromParent();
+    });
+    gameManager.goToNextLevel();
+    ball.resetBall();
+    board.resetBoard();
+    paddle.resetPosition();
+    resumeEngine();
+    // numberOfBricksLayer = 2;
+    loadInitialBrickLayer();
+    // overlays.add('gameStartOverlay');
+  }
+
+  void previousLevel() {
+    pauseEngine();
+    overlays.remove('gamePauseOverlay');
+    overlays.remove('gameOverOverlay');
+    overlays.remove('gameWonOverlay');
+    children.whereType<Brick>().forEach((brick) {
+      brick.removeFromParent();
+    });
+    gameManager.goToPreviousLevel();
+    ball.resetBall();
+    board.resetBoard();
+    paddle.resetPosition();
+    resumeEngine();
+    // numberOfBricksLayer = 2;
     loadInitialBrickLayer();
     // overlays.add('gameStartOverlay');
   }
@@ -111,7 +148,7 @@ class BricksBreaker extends FlameGame
   }
 
   Future<void> loadInitialBrickLayer() async {
-    for (var row = 0; row < numberOfBricksLayer; row++) {
+    for (var row = 0; row < gameManager.numberOfLayers; row++) {
       final bricksLayer = generateBrickLayer(row);
       for (var i = 0; i < numberOfBricksInRow; i++) {
         final xPosition = i == 0
@@ -162,7 +199,7 @@ class BricksBreaker extends FlameGame
         pauseEngine();
 
         gameManager.state = GameState.gameOver;
-        ball.ballState = BallState.ideal;
+        ball.ballState = BallState.idle;
 
         overlays.add('gameOverOverlay');
 
@@ -171,7 +208,7 @@ class BricksBreaker extends FlameGame
       brick.position.y = nextYPosition;
     }
 
-    final bricksLayer = generateBrickLayer(numberOfBricksLayer);
+    final bricksLayer = generateBrickLayer(gameManager.numberOfLayers);
     for (var i = 0; i < 7; i++) {
       await add(
         bricksLayer[i]
@@ -183,8 +220,8 @@ class BricksBreaker extends FlameGame
           ),
       );
     }
-    numberOfBricksLayer++;
-    ball.ballState = BallState.ideal;
+    // gameManager.numberOfLayers++;
+    ball.ballState = BallState.idle;
     gameManager.increaseScore();
   }
 
@@ -196,7 +233,7 @@ class BricksBreaker extends FlameGame
     pauseEngine();
 
     gameManager.state = GameState.gameOver;
-    ball.ballState = BallState.ideal;
+    ball.ballState = BallState.idle;
 
     overlays.add('gameOverOverlay');
   }
@@ -204,8 +241,7 @@ class BricksBreaker extends FlameGame
   void gameWon() {
     pauseEngine();
     // gameManager.state = GameState.intro;
-    ball.ballState = BallState.ideal;
-
+    ball.ballState = BallState.idle;
     overlays.add('gameWonOverlay');
   }
 }

@@ -95,6 +95,47 @@ class _GameWonState extends State<GameWon> {
                 ],
               ),
             ),
+            Center(
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  (widget.game as BricksBreaker).gameManager.level! > 1
+                      ? IconButton(
+                          icon: Image.asset(
+                            'assets/images/prev.png',
+                            height: 50,
+                            width: 50,
+                            fit: BoxFit.cover,
+                          ),
+                          onPressed: () {
+                            (widget.game as BricksBreaker).previousLevel();
+
+                            AudioPlayer().play(
+                              AssetSource('audio/press.mp3'),
+                            );
+                          },
+                        )
+                      : const SizedBox.shrink(),
+                  SizedBox(width: MediaQuery.of(context).size.width * 0.07),
+                  (widget.game as BricksBreaker).gameManager.level! <= 4
+                      ? IconButton(
+                          icon: Image.asset(
+                            'assets/images/next.png',
+                            height: 50,
+                            width: 50,
+                            fit: BoxFit.cover,
+                          ),
+                          onPressed: () {
+                            (widget.game as BricksBreaker).goToNextLevel();
+                            AudioPlayer().play(
+                              AssetSource('audio/press.mp3'),
+                            );
+                          },
+                        )
+                      : const SizedBox.shrink(),
+                ],
+              ),
+            ),
           ],
         ),
       ),
