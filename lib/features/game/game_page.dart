@@ -24,9 +24,8 @@ class _GamePageState extends State<GamePage> {
   @override
   void initState() {
     super.initState();
-    if (game == null) {
       game = BricksBreaker(widget.initialLevel);
-    }
+
   }
 
   @override
