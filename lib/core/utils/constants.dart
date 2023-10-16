@@ -15,7 +15,7 @@ const brickColor = 0xFF24958B;
 const brickFontColor = 0xFFFFFFFF;
 const brickFontSize = 20.0;
 
-const numberOfBricksInRow = 7;
+const numberOfBricksInRow = 3;
 const brickPadding = 8;
 const maxValueOfBrick = 10;
 const minValueOfBrick = -5;

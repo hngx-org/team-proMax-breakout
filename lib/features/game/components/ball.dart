@@ -129,10 +129,8 @@ class Ball extends SpriteComponent
       sideReflection(intersectionPoints.first, positionComponent);
     } else {
       final intersectionPointsList = intersectionPoints.toList();
-      final averageX =
-          (intersectionPointsList[0].x + intersectionPointsList[1].x) / 2;
-      final averageY =
-          (intersectionPointsList[0].y + intersectionPointsList[1].y) / 2;
+      final averageX = (intersectionPointsList[0].x + intersectionPointsList[1].x) / 2;
+      final averageY = (intersectionPointsList[0].y + intersectionPointsList[1].y) / 2;
       if (intersectionPointsList[0].x == intersectionPointsList[1].x ||
           intersectionPointsList[0].y == intersectionPointsList[1].y) {
         sideReflection(Vector2(averageX, averageY), positionComponent);
@@ -166,10 +164,8 @@ class Ball extends SpriteComponent
     final margin = size.x / 2;
     final xPosition = positionComponent.position.x;
     final yPosition = positionComponent.position.y;
-    final leftHalf =
-        xPosition - margin <= averageX && averageX < xPosition + margin;
-    final topHalf =
-        yPosition - margin <= averageY && averageY < yPosition + margin;
+    final leftHalf = xPosition - margin <= averageX && averageX < xPosition + margin;
+    final topHalf = yPosition - margin <= averageY && averageY < yPosition + margin;
 
     xDirection = leftHalf ? -1 : 1;
     yDirection = topHalf ? -1 : 1;
@@ -233,15 +229,15 @@ class Ball extends SpriteComponent
     return path..close();
   }
 
-  double get getSpawnAngle {
-    final sideToThrow = Random().nextBool();
-    final random = Random().nextDouble();
-    final spawnAngle = sideToThrow
-        ? lerpDouble(-35, 35, random)!
-        : lerpDouble(145, 215, random)!;
-
-    return spawnAngle;
-  }
+  // double get getSpawnAngle {
+  //   final sideToThrow = Random().nextBool();
+  //   final random = Random().nextDouble();
+  //   final spawnAngle = sideToThrow
+  //       ? lerpDouble(-35, 35, random)!
+  //       : lerpDouble(145, 215, random)!;
+  //
+  //   return spawnAngle;
+  // }
 
   void reflectFromPaddle(
       Set<Vector2> intersectionPoints, PositionComponent positionComponent) {
@@ -251,10 +247,8 @@ class Ball extends SpriteComponent
       final intersectionPointsList = intersectionPoints.toList();
       final averageX =
           (intersectionPointsList[0].x + intersectionPointsList[1].x) / 2;
-      final averageY =
-          (intersectionPointsList[0].y + intersectionPointsList[1].y) / 2;
-      if (intersectionPointsList[0].x == intersectionPointsList[1].x ||
-          intersectionPointsList[0].y == intersectionPointsList[1].y) {
+      final averageY = (intersectionPointsList[0].y + intersectionPointsList[1].y) / 2;
+      if (intersectionPointsList[0].x == intersectionPointsList[1].x || intersectionPointsList[0].y == intersectionPointsList[1].y) {
         sideReflection(Vector2(averageX, averageY), positionComponent);
       } else {
         cornerReflection(positionComponent, averageX, averageY);

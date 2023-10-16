@@ -33,12 +33,12 @@ class Board extends RectangleComponent
   @override
   void render(Canvas canvas) {
     canvas.drawPath(dividerPath, dividerPainter);
+
     super.render(canvas);
   }
 
   @override
   void onDragStart(DragStartEvent event) {
-
     super.onDragStart(event);
     _handleDragStart(event);
   }
@@ -117,12 +117,10 @@ class Board extends RectangleComponent
 
     if (dragLineSlope > -1 && dragLineSlope < 1) {
       newPointX = centerPosition.x - dragLineSlope.sign * 5;
-      newPointY =
-          centerPosition.y + (dragLineSlope * (newPointX - centerPosition.x));
+      newPointY = centerPosition.y + (dragLineSlope * (newPointX - centerPosition.x));
     } else {
       newPointY = centerPosition.y - 5;
-      newPointX =
-          (newPointY - centerPosition.y) / dragLineSlope + centerPosition.x;
+      newPointX = (newPointY - centerPosition.y) / dragLineSlope + centerPosition.x;
     }
 
     return Vector2(
