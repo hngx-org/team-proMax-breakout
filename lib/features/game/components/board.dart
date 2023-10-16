@@ -61,13 +61,13 @@ class Board extends RectangleComponent
 
   _handleDragStart(DragStartEvent event) {
     d.log("DRAG STARTED${gameRef.ball.ballState.name}");
-    if (gameRef.ball.ballState == BallState.ideal) {
+    if (gameRef.ball.ballState == BallState.idle) {
       dragStartPosition.setFrom(event.localPosition.xx);
     }
   }
 
   bool isBallInIdealOrDragState() {
-    return gameRef.ball.ballState == BallState.ideal ||
+    return gameRef.ball.ballState == BallState.idle ||
         gameRef.ball.ballState == BallState.drag;
   }
 
@@ -85,7 +85,7 @@ class Board extends RectangleComponent
           dragRelativePosition.x.sign == 0 ? 1 : dragRelativePosition.x.sign;
       gameRef.ball.aimAngle = atan(dragLineSlope) - sign * 90 * degrees2Radians;
     } else {
-      gameRef.ball.ballState = BallState.ideal;
+      gameRef.ball.ballState = BallState.idle;
     }
   }
 
@@ -133,7 +133,7 @@ class Board extends RectangleComponent
     dragLineSlope = 0;
     dragStartPosition.setZero();
     dragRelativePosition.setZero();
-    gameRef.ball.ballState = BallState.ideal;
+    gameRef.ball.ballState = BallState.idle;
   }
 
   void _movePaddle(DragUpdateEvent event) {

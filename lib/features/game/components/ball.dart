@@ -22,7 +22,7 @@ class Ball extends SpriteComponent
           children: [CircleHitbox()],
         );
 
-  BallState ballState = BallState.ideal;
+  BallState ballState = BallState.idle;
   double speed = 3;
   static const degree = pi / 180;
   double xDirection = 0;
@@ -76,7 +76,7 @@ class Ball extends SpriteComponent
         angle: aimAngle,
         drawFunction: () => canvas.drawPath(aimPath, aimPainter),
       );
-    } else if (ballState == BallState.ideal) {
+    } else if (ballState == BallState.idle) {
       resetBall();
     }
   }
@@ -86,7 +86,7 @@ class Ball extends SpriteComponent
     Set<Vector2> intersectionPoints,
     PositionComponent other,
   ) {
-    ballState = BallState.ideal;
+    ballState = BallState.idle;
 
     super.onCollisionStart(intersectionPoints, other);
 
@@ -189,7 +189,7 @@ class Ball extends SpriteComponent
       (gameRef.size.y - 4 * 12) - 2,
     );
     speed = 1;
-    ballState = BallState.ideal;
+    ballState = BallState.idle;
     aimTriangleMidPoint = Vector2(size.x / 2, -2 * size.y);
     aimTriangleBasePoint = Vector2(size.x / 4, -10 / 2);
     aimPointerBalls = List<Rect>.generate(

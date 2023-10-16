@@ -1,4 +1,4 @@
-import 'package:bluck_buster/features/game/game_page.dart';
+import 'package:bluck_buster/features/game/level_screen.dart';
 import 'package:flutter/material.dart';
 
 import 'features/menu/menu.view.dart';
@@ -31,7 +31,8 @@ class MyApp extends StatelessWidget {
       routes: {
         '/nextSplash': (context) => const NextSplash(),
         '/menuScreen': (context) => const GameMenu(),
-        '/gameScreen': (context) => const GamePage(),
+        '/levelScreen': (context) => const LevelScreen(),
+        // '/gameScreen': (context) =>  GamePage(),
       },
     );
   }

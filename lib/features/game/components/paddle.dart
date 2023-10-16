@@ -42,7 +42,7 @@ class Paddle extends SpriteComponent
   void render(Canvas canvas) {
     super.render(canvas);
 
-    if (gameRef.ball.ballState == BallState.ideal) {
+    if (gameRef.ball.ballState == BallState.idle) {
       resetPosition();
     }
   }

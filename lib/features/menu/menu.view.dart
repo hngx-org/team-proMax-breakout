@@ -105,7 +105,7 @@ class _GameMenuState extends State<GameMenu> {
               left: width * 0.4,
               child: GestureDetector(
                 onTap: () =>
-                    Navigator.pushReplacementNamed(context, '/gameScreen'),
+                    Navigator.pushReplacementNamed(context, '/levelScreen'),
                 child: Image.asset(
                   playBtn,
                 ),

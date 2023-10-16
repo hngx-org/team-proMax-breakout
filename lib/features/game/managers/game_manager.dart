@@ -3,10 +3,13 @@ import 'package:flame/components.dart';
 import 'package:flutter/material.dart';
 
 class GameManager extends Component with HasGameRef<BricksBreaker> {
-  GameManager();
+  GameManager({this.level = 1});
 
   ValueNotifier<int> score = ValueNotifier(0);
   ValueNotifier<int> life = ValueNotifier(3);
+  int? level;
+
+  int get numberOfLayers => level! + 1;
 
   GameState state = GameState.intro;
 
@@ -25,6 +28,19 @@ class GameManager extends Component with HasGameRef<BricksBreaker> {
 
   void increaseLife() {
     life.value++;
+  }
+
+  void goToNextLevel() {
+    level = level! + 1;
+    life.value = 3;
+  }
+
+  void goToPreviousLevel() {
+    level = level! - 1;
+  }
+
+  void setCurrentLevel(int currentLevel){
+    level = currentLevel;
   }
 }
 

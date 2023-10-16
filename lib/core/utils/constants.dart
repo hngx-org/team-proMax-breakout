@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 enum BallState {
-  ideal,
+  idle,
   drag,
   release,
   completed,
@@ -15,7 +15,7 @@ const brickColor = 0xFF24958B;
 const brickFontColor = 0xFFFFFFFF;
 const brickFontSize = 20.0;
 
-const numberOfBricksInRow = 3;
+const numberOfBricksInRow = 10;
 const brickPadding = 8;
 const maxValueOfBrick = 10;
 const minValueOfBrick = -5;
