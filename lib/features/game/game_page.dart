@@ -7,12 +7,15 @@ import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 
 class GamePage extends StatefulWidget {
+
   const GamePage({
     super.key,
     required this.initialLevel,
   });
 
+
   final int initialLevel;
+
 
   @override
   State<GamePage> createState() => _GamePageState();
@@ -21,10 +24,12 @@ class GamePage extends StatefulWidget {
 Game? game;
 
 class _GamePageState extends State<GamePage> {
+  GameTimer? gameTimer;
+
   @override
   void initState() {
     super.initState();
-      game = BricksBreaker(widget.initialLevel);
+      game = BricksBreaker(widget.initialLevel, this.gameTimer, );
 
   }
 
