@@ -6,14 +6,19 @@ import 'package:bluck_buster/features/game/components/board.dart';
 import 'package:bluck_buster/features/game/components/brick.dart';
 import 'package:bluck_buster/features/game/components/paddle.dart';
 import 'package:bluck_buster/features/game/managers/game_manager.dart';
+import 'package:bluck_buster/features/game/widgets/game_top_bar.dart';
 import 'package:flame/events.dart';
 import 'package:flame/flame.dart';
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
+import 'dart:async';
 
 class BricksBreaker extends FlameGame
+
     with HasCollisionDetection, HasKeyboardHandlerComponents {
-  BricksBreaker(this.initialLevel, {super.children});
+  final GameTimer? gameTimer;
+  BricksBreaker(this.initialLevel, this.gameTimer, {super.children});
+
 
   final int initialLevel;
 
@@ -24,6 +29,8 @@ class BricksBreaker extends FlameGame
 
   // int numberOfBricksLayer = 5;
   final Random _random = Random();
+
+
 
   @override
   Future<void> onLoad() async {
@@ -106,9 +113,12 @@ class BricksBreaker extends FlameGame
     if (paused) {
       overlays.remove('gamePauseOverlay');
       resumeEngine();
+      gameTimer!.resume();
     } else {
       overlays.add('gamePauseOverlay');
       pauseEngine();
+      gameTimer!.pause();
+
     }
   }
 

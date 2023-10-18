@@ -41,7 +41,7 @@ class _LevelScreenState extends State<LevelScreen> {
               const SizedBox(
                 height: 10,
               ),
-              ...List.generate(4, (index) => _LevelButton(level: index + 1))
+              ...List.generate(5, (index) => _LevelButton(level: index + 1))
             ],
           ),
         ),
