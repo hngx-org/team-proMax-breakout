@@ -14,11 +14,9 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 
 class BricksBreaker extends FlameGame
-
     with HasCollisionDetection, HasKeyboardHandlerComponents {
   final GameTimer? gameTimer;
   BricksBreaker(this.initialLevel, this.gameTimer, {super.children});
-
 
   final int initialLevel;
 
@@ -29,8 +27,6 @@ class BricksBreaker extends FlameGame
 
   // int numberOfBricksLayer = 5;
   final Random _random = Random();
-
-
 
   @override
   Future<void> onLoad() async {
@@ -99,6 +95,7 @@ class BricksBreaker extends FlameGame
     children.whereType<Brick>().forEach((brick) {
       brick.removeFromParent();
     });
+
     gameManager.goToPreviousLevel();
     ball.resetBall();
     board.resetBoard();
@@ -118,7 +115,6 @@ class BricksBreaker extends FlameGame
       overlays.add('gamePauseOverlay');
       pauseEngine();
       gameTimer!.pause();
-
     }
   }
 

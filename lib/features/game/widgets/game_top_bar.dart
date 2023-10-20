@@ -1,6 +1,5 @@
 import 'package:bluck_buster/features/game/bricks_breaker.dart';
 import 'package:bluck_buster/features/game/widgets/game_score.dart';
-import 'package:bluck_buster/features/menu/menu.view.dart';
 import 'package:flame/game.dart';
 import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +15,7 @@ class GameTimer {
     Duration? duration,
     Function(Duration)? onTick,
   }) {
-    _duration = duration ?? Duration(seconds: 1);
+    _duration = duration ?? const Duration(seconds: 1);
     _onTick = onTick ?? (Duration duration) {};
   }
 
@@ -68,11 +67,8 @@ class GameTopBar extends StatefulWidget {
 }
 
 class _GameTopBarState extends State<GameTopBar> {
-
-
-
   late GameTimer gameTimer;
-  Duration initialDuration = Duration(minutes: 1);
+  Duration initialDuration = const Duration(minutes: 1);
   late Duration remainingDuration;
 
   @override
@@ -127,7 +123,7 @@ class _GameTopBarState extends State<GameTopBar> {
           // ),
           Text(
             ' ${remainingDuration.inMinutes}:${remainingDuration.inSeconds % 60}',
-            style: TextStyle(fontSize: 30,fontFamily: 'khand'),
+            style: const TextStyle(fontSize: 30, fontFamily: 'khand'),
           ),
           SizedBox(
             width: width * 0.011,
@@ -143,7 +139,8 @@ class _GameTopBarState extends State<GameTopBar> {
                 color: Colors.white, borderRadius: BorderRadius.circular(10)),
             padding: const EdgeInsets.all(10),
             child: ValueListenableBuilder<int>(
-                valueListenable: (widget.game as BricksBreaker).gameManager.life,
+                valueListenable:
+                    (widget.game as BricksBreaker).gameManager.life,
                 builder: (context, val, c) {
                   return Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
