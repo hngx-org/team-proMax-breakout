@@ -40,6 +40,9 @@ dependencies:
   flame_audio: ^2.1.1
   flame: ^1.9.1
   lottie: ^2.6.0
+  firebase_core: ^2.19.0
+  firebase_auth: ^4.11.1
+  cloud_firestore: ^4.11.0
 
 dev_dependencies:
   flutter_test:
