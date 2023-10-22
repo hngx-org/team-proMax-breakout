@@ -50,19 +50,19 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyDxd3XfLGLM8XQ7CHxFmh1TMbOR7-Y5TjE',
-    appId: '1:786718492632:android:65fcaec7f8a686b3f094ad',
-    messagingSenderId: '786718492632',
-    projectId: 'team-promax',
-    storageBucket: 'team-promax.appspot.com',
+    apiKey: 'AIzaSyBAX7F-gNXr8I79Ad9PoCbSIVrsdUhfEFw',
+    appId: '1:412495527355:android:e534ddd1a3bc540c24d89e',
+    messagingSenderId: '412495527355',
+    projectId: 'team-promaxx',
+    storageBucket: 'team-promaxx.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyArQSviz23ZXMAA1HwxC4prAqiGA_PYqis',
-    appId: '1:786718492632:ios:1ba7303432d2100ef094ad',
-    messagingSenderId: '786718492632',
-    projectId: 'team-promax',
-    storageBucket: 'team-promax.appspot.com',
+    apiKey: 'AIzaSyBVjSYVtwg7agYRL8s9cQMmOtszJMa-Sg8',
+    appId: '1:412495527355:ios:8e072f267fd78f7824d89e',
+    messagingSenderId: '412495527355',
+    projectId: 'team-promaxx',
+    storageBucket: 'team-promaxx.appspot.com',
     iosBundleId: 'com.example.bluckBuster',
   );
 }

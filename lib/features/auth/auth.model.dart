@@ -33,8 +33,8 @@ class AuthViewModel {
     userName = value!;
   }
 
-  submit(BuildContext context) async {
-    final isValid = formKey.currentState!.validate();
+  void submit(BuildContext context) async {
+    formKey.currentState?.validate();
 
     try {
       if (isLoggedIn) {
@@ -72,14 +72,6 @@ class AuthViewModel {
           ),
         ),
       );
-
-      //check user values
-      if (isValid) {
-        formKey.currentState!.save();
-        debugPrint(!isLoggedIn ? userName : '');
-        debugPrint(userEmail);
-        debugPrint(userPswd);
-      }
     }
   }
 }
