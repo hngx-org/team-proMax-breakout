@@ -42,7 +42,7 @@ class MyApp extends StatelessWidget {
             if (snapshot.hasData) {
               return const GameMenu();
             }
-            return const AuthScreen();
+            return const SplashView();
           }),
       routes: {
         '/nextSplash': (context) => const NextSplash(),

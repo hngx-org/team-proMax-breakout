@@ -35,6 +35,7 @@ class AuthViewModel {
 
   submit(BuildContext context) async {
     final isValid = formKey.currentState!.validate();
+
     try {
       if (isLoggedIn) {
         final userCred = await fBase.signInWithEmailAndPassword(
@@ -48,7 +49,7 @@ class AuthViewModel {
           password: userPswd,
         );
 
-        await fDB.collection('users').doc(userCred!.uid).set({
+        await fDB.collection('users').doc(userCred.user!.uid).set({
           'username': userName,
           'email': userEmail,
         });
@@ -71,14 +72,14 @@ class AuthViewModel {
           ),
         ),
       );
-    }
 
-    //check user values
-    if (isValid) {
-      formKey.currentState!.save();
-      debugPrint(!isLoggedIn ? userName : '');
-      debugPrint(userEmail);
-      debugPrint(userPswd);
+      //check user values
+      if (isValid) {
+        formKey.currentState!.save();
+        debugPrint(!isLoggedIn ? userName : '');
+        debugPrint(userEmail);
+        debugPrint(userPswd);
+      }
     }
   }
 }
